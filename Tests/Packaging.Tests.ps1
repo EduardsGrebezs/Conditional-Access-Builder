@@ -55,7 +55,7 @@ Describe 'Public source packaging security' {
             )
             @($paths).Count | Should -Be $expected.Count
             foreach ($file in $expected) { $paths | Should -Contain $file }
-            $paths -join ',' | Should -Not -Match 'Tests/|Tools/|Packaging/|\\.github/|SECURITY\\.md'
+            $paths -join ',' | Should -Not -Match 'Tests/|Tools/|Packaging/|\.github/|SECURITY\.md'
         }
         finally { $archive.Dispose() }
     }
