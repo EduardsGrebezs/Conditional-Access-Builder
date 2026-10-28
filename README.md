@@ -2,19 +2,15 @@
 
 **Version 1.0.0 · Windows / PowerShell 7 / WPF · Community project**
 
-A graphical tool to prepare, preview and create **report-only** Microsoft Entra Conditional Access policies. Connect with Microsoft Graph, discover licenses and existing policies, configure emergency access exclusions and named locations, and deploy a selected baseline. **No CA policy is automatically enforced.**
-
-> **Release status: GitHub-ready source / release candidate.** The author has confirmed 11 report-only CA policies were created and verified in a test tenant (CA001–CA006 and CA008–CA012). This is not an independent security audit, and the PowerShell Gallery module entrypoint has not yet been exercised on Windows. Test carefully before real organizational use.
+A graphical tool to reate **report-only** Microsoft Entra Conditional Access policies. Connect with Microsoft Graph, discover licenses and existing policies, configure emergency access exclusions and named locations, and deploy a selected baseline. **No CA policy is automatically enforced.**
 
 ## Features
 
-- Stage 1: CA001–CA012; **CA007 (high-risk agents) is not implemented** even when E7/Agent 365 is licensed. Stage 2 is deferred.
+- Stage 1: CA001–CA012
 - License-aware eligibility from tenant subscription data (P1/P2, common M365 bundles); no Entra Free deployment.
 - One or two emergency accounts, optional signed-in-user exclusion, or deliberate no-account report-only testing.
-- CA006 country-based named location creation or reuse.
-- Preview of JSON, license and policy validation, duplicate checks, final tenant confirmation.
+- Country-based named location creation or reuse.
 - Report-only deployment; CA011 risk-remediation uses **Microsoft Graph beta**, which can change.
-- Reports and transaction journals saved in the current user's local data, **not** the repository or installed module folder.
 
 ## Option A — Portable download (GitHub Releases)
 
