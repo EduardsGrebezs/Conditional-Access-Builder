@@ -29,4 +29,34 @@ Describe 'Public source packaging security' {
         $source = Get-Content (Join-Path $script:projectRoot 'Modules/Graph.psm1') -Raw
         $source | Should -Match "Status='NOT IMPLEMENTED'"
     }
+    It 'keeps GitHub Code Download ZIP limited to runnable files' {
+        $git = Get-Command git -ErrorAction Stop
+        $zipPath = Join-Path $TestDrive 'download.zip'
+        Push-Location $script:projectRoot
+        try {
+            & $git.Source archive --format=zip "--output=$zipPath" HEAD
+            $LASTEXITCODE | Should -Be 0
+        }
+        finally { Pop-Location }
+
+        Add-Type -AssemblyName System.IO.Compression
+        $archive = [System.IO.Compression.ZipFile]::OpenRead($zipPath)
+        try {
+            $paths = @($archive.Entries | Where-Object { -not $_.FullName.EndsWith('/') } | ForEach-Object { $_.FullName })
+            $expected = @(
+                'Start-EntraCABuilder.ps1',
+                'Launch-GUI.cmd',
+                'GUI/MainWindow.xaml',
+                'Modules/Graph.psm1',
+                'Modules/Policy.psm1',
+                'Baselines/policy-catalogue.json',
+                'README.md',
+                'LICENSE'
+            )
+            @($paths).Count | Should -Be $expected.Count
+            foreach ($file in $expected) { $paths | Should -Contain $file }
+            $paths -join ',' | Should -Not -Match 'Tests/|Tools/|Packaging/|\\.github/|SECURITY\\.md'
+        }
+        finally { $archive.Dispose() }
+    }
 }
