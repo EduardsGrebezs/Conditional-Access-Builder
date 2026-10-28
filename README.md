@@ -1,12 +1,9 @@
 # Conditional Access Builder
 
-**Windows · PowerShell 7 · Microsoft Entra ID · Version 1.0.0**
-
 A PowerShell/WPF GUI for creating Microsoft Entra Conditional Access policies in **report-only mode**. The application never automatically enables policies.
 
 ## Requirements
 
-- Windows 10/11 or Windows Server with Desktop Experience
 - PowerShell 7.2 or later
 - Microsoft Entra ID P1/P2 licensing for the selected policies
 - Microsoft Graph consent and an appropriately privileged Entra administrator account
