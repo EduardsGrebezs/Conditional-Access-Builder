@@ -17,7 +17,7 @@ $runtime = @(
     'Modules/Graph.psm1', 'Modules/Policy.psm1',
     'Baselines/policy-catalogue.json', 'LICENSE'
 )
-$portable = @($runtime) + @('Launch-GUI.cmd', 'README.md')
+$portable = @($runtime) + @('README.md')
 $module = @($runtime) + @('Packaging/ConditionalAccessBuilder.psd1', 'Packaging/ConditionalAccessBuilder.psm1')
 
 foreach ($rel in @($portable + $module | Sort-Object -Unique)) {

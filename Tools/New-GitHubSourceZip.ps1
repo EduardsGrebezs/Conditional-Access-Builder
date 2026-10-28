@@ -15,7 +15,7 @@ $version = 'v1.0.0'
 $files = @(
     '.gitignore', '.gitattributes',
     '.github/workflows/pester.yml',
-    'Start-EntraCABuilder.ps1', 'Launch-GUI.cmd',
+    'Start-EntraCABuilder.ps1',
     'GUI/MainWindow.xaml',
     'Modules/Graph.psm1', 'Modules/Policy.psm1',
     'Baselines/policy-catalogue.json',
@@ -41,13 +41,11 @@ foreach ($relative in $files) {
 }
 
 # Cheap additional fail-closed source review; not a substitute for secret scanning.
-$codeFiles = $files | Where-Object { $_ -match '\.(?:ps1|psm1|cmd)$' }
+$codeFiles = $files | Where-Object { $_ -match '\.(?:ps1|psm1)$' }
 foreach ($relative in $codeFiles) {
     $content = Get-Content -LiteralPath (Join-Path $root $relative) -Raw
     if ($content -match '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----') { throw "Private key material found in $relative" }
-    if ($relative -eq 'Launch-GUI.cmd' -and $content -match '(?i)-ExecutionPolicy\s+Bypass') {
-        throw 'Public launcher must not bypass execution policy.'
-    }
+
 }
 
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null

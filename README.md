@@ -21,11 +21,14 @@ Install-Module Microsoft.Graph.Authentication -Scope CurrentUser
 
 1. Use **Code → Download ZIP** on GitHub, or clone this repository.
 2. Extract the ZIP and review the scripts before execution.
-3. Run **`Launch-GUI.cmd`** on Windows, or:
+3. Open **PowerShell 7**, navigate to the extracted application folder, and run:
 
    ```powershell
-   pwsh.exe -NoProfile -STA -File .\Start-EntraCABuilder.ps1
+   Set-Location "C:\path\to\Conditional-Access-Builder-main"
+   .\Start-EntraCABuilder.ps1
    ```
+
+   If the session is not in STA mode, start PowerShell using `pwsh.exe -NoProfile -STA` first.
 
 The scripts are not code-signed. If Windows blocks trusted downloaded files, follow your organization's execution-policy rules; do not bypass an enforced policy.
 
@@ -58,13 +61,9 @@ Reports may contain tenant, policy, and operator identifiers. Do not post them p
 
 ## Distribution
 
-The GitHub repository provides the source. To build the portable ZIP and a PowerShell module candidate locally, run:
+**Code → Download ZIP** contains everything required to run the builder. No installer or batch launcher is needed.
 
-```powershell
-.\Tools\New-Distributions.ps1
-```
-
-**PowerShell Gallery installation is not available until the module is published.** This repository's packaging scripts do not publish modules or releases automatically.
+PowerShell Gallery installation is not yet available; module publishing is planned separately.
 
 ## License and security
 
