@@ -19,8 +19,7 @@ $files = @(
     'GUI/MainWindow.xaml',
     'Modules/Graph.psm1', 'Modules/Policy.psm1',
     'Baselines/policy-catalogue.json',
-    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE', 'SECURITY.md',
-    'Docs/CA012-guest-mfa.md', 'Docs/TEST-PLAN.md', 'Docs/GITHUB-PUBLISHING.md',
+    'README.md', 'LICENSE', 'SECURITY.md',
     'Tools/New-GitHubSourceZip.ps1',
     'Tools/New-Distributions.ps1',
     'Packaging/ConditionalAccessBuilder.psd1', 'Packaging/ConditionalAccessBuilder.psm1'
