@@ -12,7 +12,7 @@ A graphical tool to reate **report-only** Microsoft Entra Conditional Access pol
 - Country-based named location creation or reuse.
 - Report-only deployment; CA011 risk-remediation uses **Microsoft Graph beta**, which can change.
 
-## Option A — Portable download (GitHub Releases)
+## Option A — Portable download
 
 1. Install **PowerShell 7.2+** on Windows 10/11 or Windows Server with Desktop Experience.
 2. Install the Graph prerequisite in PowerShell 7:
@@ -27,7 +27,7 @@ A graphical tool to reate **report-only** Microsoft Entra Conditional Access pol
    pwsh.exe -NoProfile -STA -File .\Start-EntraCABuilder.ps1
    ```
 
-## Option B — Install as a PowerShell module (after PowerShell Gallery publication)
+## Option B — Install as a PowerShell module
 
 On Windows with PowerShell 7:
 
@@ -55,13 +55,10 @@ Windows `pwsh` normally starts in STA mode; if hosting in an MTA process, launch
 
 ## Source and security
 
-- The portable launcher does not bypass execution policy and scripts are unsigned. If a downloaded copy is blocked, first verify the download/source, then follow your organization's approved process for unblocking trusted source. Do not bypass managed execution policies.
 - The tool requests delegated read permissions and `Policy.ReadWrite.ConditionalAccess` when connecting; the operator also needs an authorized Entra role. Connection alone makes no tenant changes.
 - CA006 named-location creation is a separate tenant write and may remain if policy creation fails.
-- If the app reports a pending or uncertain creation result, **do not retry blindly**. Refresh and inspect existing policies.
-- Graph beta is used solely for CA011. CA007 remains unavailable; not every advertised Microsoft template/feature is deployed.
+- Graph beta is used solely for CA011.
 - Tenant-level license discovery is not per-user license coverage verification.
-- Report-only is not a guarantee of zero user impact.
 
 Review [`SECURITY.md`](SECURITY.md), [`Docs/TEST-PLAN.md`](Docs/TEST-PLAN.md), and [`Docs/GITHUB-PUBLISHING.md`](Docs/GITHUB-PUBLISHING.md) before publishing or deploying.
 
