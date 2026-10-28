@@ -187,7 +187,7 @@ Describe 'Named Locations GUI and linked CA006 regression checks (v0.1.5)' {
     }
     It 'logs a CA006 creation attempt and a failure rather than silent location-only success' {
         $script:source | Should -Match 'Next step: create report-only CA006'
-        $script:source | Should -Match 'Deployment failed — attention required'
+        $script:source | Should -Match 'Deployment needs review'
         $script:source | Should -Match 'Reusing named location for CA006'
     }
 }

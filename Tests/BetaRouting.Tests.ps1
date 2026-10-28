@@ -25,7 +25,7 @@ Describe 'Graph API routing and safety' {
     }
     It 'blocks enforced policy POST requests to beta before contacting Graph' {
         $bad = @{ displayName='CA011 - Test'; state='enabled'; grantControls=@{ builtInControls=@('riskRemediation') } }
-        { Invoke-CARequest -Path '/identity/conditionalAccess/policies' -Method POST -ApiVersion beta -Body $bad } | Should -Throw '*report-only*'
+        { Invoke-CARequest -Path '/identity/conditionalAccess/policies' -Method POST -ApiVersion beta -Body $bad } | Should -Throw '*enabledForReportingButNotEnforced*'
     }
     It 'uses the v1.0 all-guest special scope without extra subtype restrictions for CA012' {
         $defs = Get-Content (Join-Path $script:root 'Baselines/policy-catalogue.json') -Raw | ConvertFrom-Json -AsHashtable

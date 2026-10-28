@@ -18,8 +18,12 @@ Describe 'Tenant switching safeguards' {
         $script:startup | Should -Match '\$script:Gui.LicenseAck.IsChecked = \$false'
     }
     It 'never unlocks CA007 for an E7 tenant before beta support is built' {
-        $script:startup | Should -Match 'CA007 not implemented'
-        $script:startup | Should -Match '\$row\[0\].CanDeploy = \$false'
+        # Exercise the actual entitlement gate instead of depending on a GUI log message.
+        $e7 = @{ capabilityStatus='Enabled'; skuPartNumber='MICROSOFT_365_E7'; servicePlans=@() }
+        $ca007 = @{ code='CA007'; license='P2'; stage='Stage 1'; deploymentSupport='beta' }
+        $eligibility = Get-CAPolicyLicenseEligibility -Definition $ca007 -Skus @($e7)
+        $eligibility.CanDeploy | Should -BeFalse
+        $eligibility.Status | Should -Be 'NOT IMPLEMENTED'
     }
 }
 Describe 'Agent 365 tenant license signals' {
