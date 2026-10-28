@@ -1,0 +1,9 @@
+# Keep portable source text clean in Git
+*.ps1 text eol=crlf
+*.psm1 text eol=crlf
+*.psd1 text eol=crlf
+*.xaml text eol=crlf
+*.cmd text eol=crlf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
