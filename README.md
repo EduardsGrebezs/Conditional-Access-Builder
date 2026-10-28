@@ -39,34 +39,14 @@ The scripts are not code-signed. If Windows blocks trusted downloaded files, fol
 
 ## Included functionality
 
-- CA001–CA006 and CA008–CA012: configurable report-only baseline
 - Licensing checks, policy validation, and duplicate detection
 - Named-location country selection for CA006
 - Optional emergency-account and signed-in-administrator exclusions
 - CA011 uses the Microsoft Graph **beta** endpoint for risk remediation
-- CA007 (high-risk agents) is **not implemented**, including for E7 tenants
 
 **Important:** Microsoft recommends at least two emergency access accounts before enforcing Conditional Access. Review real sign-in results and dependencies before enabling any policies manually. Creating a named location is a separate Graph write, even if its corresponding policy cannot be created.
 
-## Logs and privacy
 
-Deployment reports are saved locally under:
-
-`%LOCALAPPDATA%\ConditionalAccessBuilder\Reports`
-
-Reports may contain tenant, policy, and operator identifiers. Do not post them publicly.
-
-## Distribution
-
-**Code → Download ZIP** contains everything required to run the builder. No installer or batch launcher is needed.
-
-### PowerShell module (after Gallery publication)
-
-On Windows with PowerShell 7.2 or later, users will be able to install and start the same GUI:
-
-```powershell
-Install-Module ConditionalAccessBuilder -Scope CurrentUser
-Start-ConditionalAccessBuilder
 ```
 
 With PowerShell 7.4+, `Install-PSResource ConditionalAccessBuilder -Scope CurrentUser` is another supported installation option.
