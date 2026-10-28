@@ -46,26 +46,3 @@ The scripts are not code-signed. If Windows blocks trusted downloaded files, fol
 
 **Important:** Microsoft recommends at least two emergency access accounts before enforcing Conditional Access. Review real sign-in results and dependencies before enabling any policies manually. Creating a named location is a separate Graph write, even if its corresponding policy cannot be created.
 
-
-```
-
-With PowerShell 7.4+, `Install-PSResource ConditionalAccessBuilder -Scope CurrentUser` is another supported installation option.
-
-**Not published yet:** the commands above will work after the package is released to PowerShell Gallery. Installing the module does not connect to a tenant or create Conditional Access policies.
-
-To validate the module locally before publication, clone the repository (the GitHub **Code → Download ZIP** archive deliberately excludes developer tooling), then run:
-
-```powershell
-.\Tools\Build-Module.ps1
-$module = Join-Path $PWD 'dist\ConditionalAccessBuilder\ConditionalAccessBuilder.psd1'
-Test-ModuleManifest $module
-Import-Module $module -Force
-Get-Command Start-ConditionalAccessBuilder
-Start-ConditionalAccessBuilder
-```
-
-The module needs the Microsoft.Graph.Authentication dependency. When publishing, the project owner must use their own PowerShell Gallery publisher account and API key. **Never commit or share an API key.**
-
-## License and security
-
-Released under the [MIT License](LICENSE). See [SECURITY.md](SECURITY.md) for safe handling of tenant data and security concerns.
