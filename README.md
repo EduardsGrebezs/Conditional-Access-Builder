@@ -1,65 +1,71 @@
 # Conditional Access Builder
 
-**Version 1.0.0 · Windows / PowerShell 7 / WPF · Community project**
+**Windows · PowerShell 7 · Microsoft Entra ID · Version 1.0.0**
 
-A graphical tool to create **report-only** Microsoft Entra Conditional Access policies. Connect with Microsoft Graph, discover licenses, configure emergency access exclusions and named locations, and deploy a selected baseline. **No CA policy is automatically enforced.**
+A PowerShell/WPF GUI for creating Microsoft Entra Conditional Access policies in **report-only mode**. The application never automatically enables policies.
 
-## Features
+## Requirements
 
-- Stage 1: CA001–CA012; **CA007 (high-risk agents) is not implemented** even when E7/Agent 365 is licensed.
-- License-aware eligibility from tenant subscription data (P1/P2, common M365 bundles); no Entra Free deployment.
-- One or two emergency accounts, optional signed-in-user exclusion, or deliberate no-account report-only testing.
-- Country-based named location creation or reuse.
-- Preview of JSON, license and policy validation, duplicate checks, final tenant confirmation.
-- Report-only deployment; CA011 risk-remediation uses **Microsoft Graph beta**, which can change.
+- Windows 10/11 or Windows Server with Desktop Experience
+- PowerShell 7.2 or later
+- Microsoft Entra ID P1/P2 licensing for the selected policies
+- Microsoft Graph consent and an appropriately privileged Entra administrator account
 
-## Option A — Portable download (GitHub Releases)
+Install the Microsoft Graph authentication module in PowerShell 7:
 
-1. Install **PowerShell 7.2+** on Windows 10/11 or Windows Server with Desktop Experience.
-2. Install the Graph prerequisite in PowerShell 7:
+```powershell
+Install-Module Microsoft.Graph.Authentication -Scope CurrentUser
+```
 
-   ```powershell
-   Install-Module Microsoft.Graph.Authentication -Scope CurrentUser
-   ```
+## Run the builder
 
-3. Download the **Portable.zip** from the GitHub Release (once published), verify the SHA-256 checksum, extract, review the source, then double-click `Launch-GUI.cmd`. You can also run:
+1. Use **Code → Download ZIP** on GitHub, or clone this repository.
+2. Extract the ZIP and review the scripts before execution.
+3. Run **`Launch-GUI.cmd`** on Windows, or:
 
    ```powershell
    pwsh.exe -NoProfile -STA -File .\Start-EntraCABuilder.ps1
    ```
 
-## Option B — Install as a PowerShell module (after PowerShell Gallery publication)
+The scripts are not code-signed. If Windows blocks trusted downloaded files, follow your organization's execution-policy rules; do not bypass an enforced policy.
 
-On Windows with PowerShell 7:
+## Use
+
+1. Select **Connect**, sign in, then **Refresh Data**.
+2. Configure emergency-account exclusions (one or two accounts recommended) and, for CA006, a named location.
+3. Choose the policies, then select **Preview Run** and review the proposed configuration.
+4. Confirm licensing and select **Deploy**. Only report-only policies can be created.
+5. Verify the resulting policies in Microsoft Entra and review the **Activity Log**.
+
+## Included functionality
+
+- CA001–CA006 and CA008–CA012: configurable report-only baseline
+- Licensing checks, policy validation, and duplicate detection
+- Named-location country selection for CA006
+- Optional emergency-account and signed-in-administrator exclusions
+- CA011 uses the Microsoft Graph **beta** endpoint for risk remediation
+- CA007 (high-risk agents) is **not implemented**, including for E7 tenants
+
+**Important:** Microsoft recommends at least two emergency access accounts before enforcing Conditional Access. Review real sign-in results and dependencies before enabling any policies manually. Creating a named location is a separate Graph write, even if its corresponding policy cannot be created.
+
+## Logs and privacy
+
+Deployment reports are saved locally under:
+
+`%LOCALAPPDATA%\ConditionalAccessBuilder\Reports`
+
+Reports may contain tenant, policy, and operator identifiers. Do not post them publicly.
+
+## Distribution
+
+The GitHub repository provides the source. To build the portable ZIP and a PowerShell module candidate locally, run:
 
 ```powershell
-Install-Module ConditionalAccessBuilder -Scope CurrentUser
-Import-Module ConditionalAccessBuilder
-Start-ConditionalAccessBuilder
+.\Tools\New-Distributions.ps1
 ```
 
-Windows `pwsh` normally starts in STA mode; if hosting in an MTA process, launch a new session with `pwsh -STA`. The GUI is Windows-only; the packaging scripts are cross-platform.
+**PowerShell Gallery installation is not available until the module is published.** This repository's packaging scripts do not publish modules or releases automatically.
 
-## Run workflow
+## License and security
 
-1. **Connect**, consent to requested Microsoft Graph scopes if authorized, then **Refresh Data**.
-2. Optionally configure emergency exclusions and select countries or an existing named location for CA006.
-3. **Select All** or select individual eligible policies. **Preview Run** and inspect the generated configuration and any blocked policies.
-4. Confirm target-user licensing, select **Deploy** and review the target tenant confirmation.
-5. Check the **Activity Log** and generated report-only policies in Microsoft Entra. Never enable policies without independent testing and emergency access planning.
-
-### Runtime report folder
-
-`%LOCALAPPDATA%\ConditionalAccessBuilder\Reports` contains deployment JSON and `.journal.jsonl` files, including tenant and operator identifiers. **Do not upload reports to a public GitHub repository or issue.**
-
-## Source and security
-
-- The tool requests delegated read permissions and `Policy.ReadWrite.ConditionalAccess` when connecting; the operator also needs an authorized Entra role. Connection alone makes no tenant changes.
-- CA006 named-location creation is a separate tenant write and may remain if policy creation fails.
-- Graph beta is used solely for CA011. CA007 remains unavailable; not every advertised Microsoft template/feature is deployed.
-
-Review [`SECURITY.md`](SECURITY.md), [`Docs/TEST-PLAN.md`](Docs/TEST-PLAN.md), and [`Docs/GITHUB-PUBLISHING.md`](Docs/GITHUB-PUBLISHING.md) before publishing or deploying.
-
-## Community
-
-MIT licensed. Contributions and security reports are welcome; see `CONTRIBUTING.md` and `SECURITY.md`. No guarantee of suitability for production environments.
+Released under the [MIT License](LICENSE). See [SECURITY.md](SECURITY.md) for safe handling of tenant data and security concerns.
