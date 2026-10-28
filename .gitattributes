@@ -19,4 +19,3 @@ Packaging export-ignore
 Packaging/** export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
-SECURITY.md export-ignore

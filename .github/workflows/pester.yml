@@ -31,5 +31,5 @@ jobs:
           $command = Get-Command Start-ConditionalAccessBuilder -ErrorAction Stop
           if ($command.Source -ne 'ConditionalAccessBuilder') { throw 'Unexpected module command source' }
           $files = @(Get-ChildItem 'dist/ConditionalAccessBuilder' -File -Recurse)
-          if ($files.Count -ne 10) { throw "Unexpected packaged file count: $($files.Count)" }
+          if ($files.Count -ne 9) { throw "Unexpected packaged file count: $($files.Count)" }
           Write-Host "Module staged, manifest valid and command import successful. GUI deployment not executed."

@@ -32,6 +32,7 @@ Describe 'PowerShell Gallery module preparation and runtime safety' {
         $builder = Get-Content (Join-Path $script:root 'Tools/Build-Module.ps1') -Raw
         $builder | Should -Match 'Packaging/ConditionalAccessBuilder.psd1'
         $builder | Should -Match 'Modules/Graph.psm1'
+        $builder | Should -Not -Match "'SECURITY\.md'"
         $builder | Should -Not -Match 'Copy-Item\s+-Recurse'
         $builder | Should -Not -Match 'Publish-(Module|PSResource)'
         $builder | Should -Not -Match 'Portable.zip'

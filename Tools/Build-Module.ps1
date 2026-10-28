@@ -27,8 +27,7 @@ $files = @(
     'Modules/Policy.psm1',
     'Baselines/policy-catalogue.json',
     'LICENSE',
-    'README.md',
-    'SECURITY.md'
+    'README.md'
 )
 
 # Do not copy directories recursively or include files from the working folder.

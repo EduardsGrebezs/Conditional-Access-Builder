@@ -13,10 +13,7 @@ Describe 'Public source packaging security' {
     It 'does not contain planning documents or private Excel files' {
         Test-Path (Join-Path $script:projectRoot 'Docs') | Should -BeFalse
         @(Get-ChildItem -Path $script:projectRoot -Filter '*.xlsx' -Recurse -File).Count | Should -Be 0
-        $archiveBuilder = Get-Content (Join-Path $script:projectRoot 'Tools/New-GitHubSourceZip.ps1') -Raw
-        $archiveBuilder | Should -Not -Match 'Docs/'
-        $archiveBuilder | Should -Not -Match "'CHANGELOG.md'"
-        $archiveBuilder | Should -Not -Match "'CONTRIBUTING.md'"
+        Test-Path (Join-Path $script:projectRoot 'Tools/New-GitHubSourceZip.ps1') | Should -BeFalse
     }
     It 'gitignores archives, private keys, and output reports' {
         $ignore = Get-Content (Join-Path $script:projectRoot '.gitignore') -Raw
