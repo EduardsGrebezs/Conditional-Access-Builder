@@ -8,6 +8,6 @@
 
 ## Running source safely
 
-- The public `Launch-GUI.cmd` deliberately does **not** set `-ExecutionPolicy Bypass`.
+- Run the reviewed script using PowerShell 7. Do not bypass your organization's execution policy.
 - Source is **not code-signed**. After verifying the source ZIP origin and reviewing its scripts, you may use `Unblock-File` on only the extracted project scripts if your organization's PowerShell policy permits it. Do not override organization-enforced policies.
 

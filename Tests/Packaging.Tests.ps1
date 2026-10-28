@@ -2,10 +2,13 @@ BeforeAll {
     $script:projectRoot = Split-Path $PSScriptRoot -Parent
 }
 Describe 'Public source packaging security' {
-    It 'does not bypass execution policy in the public launcher' {
-        $cmd = Get-Content (Join-Path $script:projectRoot 'Launch-GUI.cmd') -Raw
-        $cmd | Should -Not -Match '(?i)-ExecutionPolicy\s+Bypass'
-        $cmd | Should -Match '(?i)pwsh\.exe -NoProfile -STA -File'
+    It 'launches directly through PowerShell 7 without a batch file' {
+        Test-Path (Join-Path $script:projectRoot 'Launch-GUI.cmd') | Should -BeFalse
+        $entry = Get-Content (Join-Path $script:projectRoot 'Start-EntraCABuilder.ps1') -Raw
+        $entry | Should -Match '#Requires -Version 7\.2'
+        $readme = Get-Content (Join-Path $script:projectRoot 'README.md') -Raw
+        $readme | Should -Match 'Start-EntraCABuilder\.ps1'
+        $readme | Should -Not -Match 'Launch-GUI\.cmd'
     }
     It 'does not contain planning documents or private Excel files' {
         Test-Path (Join-Path $script:projectRoot 'Docs') | Should -BeFalse
@@ -45,7 +48,6 @@ Describe 'Public source packaging security' {
             $paths = @($archive.Entries | Where-Object { -not $_.FullName.EndsWith('/') } | ForEach-Object { $_.FullName })
             $expected = @(
                 'Start-EntraCABuilder.ps1',
-                'Launch-GUI.cmd',
                 'GUI/MainWindow.xaml',
                 'Modules/Graph.psm1',
                 'Modules/Policy.psm1',
