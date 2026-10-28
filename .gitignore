@@ -1,0 +1,48 @@
+# Generated tenant data (contains tenant and identity information)
+/Reports/*
+!/Reports/.gitkeep
+/Logs/
+/Exports/
+/Output/
+/artifacts/
+/dist/
+/TestResults/
+/coverage/
+
+# Keep release archives and local Excel baselines OUT of git
+*.zip
+*.7z
+*.tar.gz
+*.xlsx
+*.xlsm
+*.csv
+
+# Tokens, certificate private keys, credentials, local configuration
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+*.key
+*.kdbx
+*.publishsettings
+*credentials*
+*secrets*
+*.token
+*.auth
+
+# Logs, editor and temp files
+*.log
+*.jsonl
+*.tmp
+*.bak
+*.swp
+.vscode/
+.idea/
+.vs/
+__pycache__/
+bin/
+obj/
+.DS_Store
+Thumbs.db

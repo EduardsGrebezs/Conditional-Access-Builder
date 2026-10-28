@@ -1,9 +1,5 @@
 # Conditional Access Builder
 
-> [!WARNING]
-> **Repository bootstrap in progress.** The source files and downloadable release are not uploaded yet. Do not attempt installation until the source upload and CI validation are complete.
-
-
 **Version 1.0.0 · Windows / PowerShell 7 / WPF · Community project**
 
 A graphical tool to prepare, preview and create **report-only** Microsoft Entra Conditional Access policies. Connect with Microsoft Graph, discover licenses and existing policies, configure emergency access exclusions and named locations, and deploy a selected baseline. **No CA policy is automatically enforced.**
