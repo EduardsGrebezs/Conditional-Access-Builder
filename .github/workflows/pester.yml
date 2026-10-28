@@ -17,3 +17,19 @@ jobs:
       - name: Run unit tests (no tenant connection)
         shell: pwsh
         run: Invoke-Pester -Path './Tests' -CI -Output Detailed
+      - name: Install Graph Authentication dependency for module validation
+        shell: pwsh
+        run: Install-Module Microsoft.Graph.Authentication -Repository PSGallery -Scope CurrentUser -MinimumVersion 2.0.0 -Force
+      - name: Stage and validate PowerShell Gallery module (no publication)
+        shell: pwsh
+        run: |
+          .\Tools\Build-Module.ps1
+          $manifest = Join-Path $PWD 'dist/ConditionalAccessBuilder/ConditionalAccessBuilder.psd1'
+          $package = Test-ModuleManifest -Path $manifest -ErrorAction Stop
+          if ($package.Version.ToString() -ne '1.0.0') { throw 'Unexpected module version' }
+          Import-Module $manifest -Force -ErrorAction Stop
+          $command = Get-Command Start-ConditionalAccessBuilder -ErrorAction Stop
+          if ($command.Source -ne 'ConditionalAccessBuilder') { throw 'Unexpected module command source' }
+          $files = @(Get-ChildItem 'dist/ConditionalAccessBuilder' -File -Recurse)
+          if ($files.Count -ne 10) { throw "Unexpected packaged file count: $($files.Count)" }
+          Write-Host "Module staged, manifest valid and command import successful. GUI deployment not executed."

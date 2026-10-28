@@ -63,7 +63,31 @@ Reports may contain tenant, policy, and operator identifiers. Do not post them p
 
 **Code → Download ZIP** contains everything required to run the builder. No installer or batch launcher is needed.
 
-PowerShell Gallery installation is not yet available; module publishing is planned separately.
+### PowerShell module (after Gallery publication)
+
+On Windows with PowerShell 7.2 or later, users will be able to install and start the same GUI:
+
+```powershell
+Install-Module ConditionalAccessBuilder -Scope CurrentUser
+Start-ConditionalAccessBuilder
+```
+
+With PowerShell 7.4+, `Install-PSResource ConditionalAccessBuilder -Scope CurrentUser` is another supported installation option.
+
+**Not published yet:** the commands above will work after the package is released to PowerShell Gallery. Installing the module does not connect to a tenant or create Conditional Access policies.
+
+To validate the module locally before publication, clone the repository (the GitHub **Code → Download ZIP** archive deliberately excludes developer tooling), then run:
+
+```powershell
+.\Tools\Build-Module.ps1
+$module = Join-Path $PWD 'dist\ConditionalAccessBuilder\ConditionalAccessBuilder.psd1'
+Test-ModuleManifest $module
+Import-Module $module -Force
+Get-Command Start-ConditionalAccessBuilder
+Start-ConditionalAccessBuilder
+```
+
+The module needs the Microsoft.Graph.Authentication dependency. When publishing, the project owner must use their own PowerShell Gallery publisher account and API key. **Never commit or share an API key.**
 
 ## License and security
 
