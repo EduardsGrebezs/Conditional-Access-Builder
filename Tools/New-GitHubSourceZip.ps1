@@ -21,7 +21,7 @@ $files = @(
     'Baselines/policy-catalogue.json',
     'README.md', 'LICENSE', 'SECURITY.md',
     'Tools/New-GitHubSourceZip.ps1',
-    'Tools/New-Distributions.ps1',
+    'Tools/Build-Module.ps1',
     'Packaging/ConditionalAccessBuilder.psd1', 'Packaging/ConditionalAccessBuilder.psm1'
 )
 $files += @(Get-ChildItem -LiteralPath (Join-Path $root 'Tests') -Filter '*.Tests.ps1' -File | Sort-Object Name | ForEach-Object { "Tests/$($_.Name)" })

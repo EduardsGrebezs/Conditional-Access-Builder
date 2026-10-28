@@ -13,7 +13,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 if (-not $IsWindows) { throw 'This WPF GUI requires Windows. Run on Windows 10/11 or supported Windows Server desktop.' }
 if ([threading.Thread]::CurrentThread.GetApartmentState() -ne 'STA') {
-    throw 'WPF requires STA. Run: pwsh.exe -NoProfile -STA -File .\Start-EntraCABuilder.ps1 (or double-click Launch-GUI.cmd)'
+    throw 'WPF requires STA. Run: pwsh.exe -NoProfile -STA -File .\Start-EntraCABuilder.ps1 '
 }
 $script:Root = $PSScriptRoot
 # Runtime output belongs to the current Windows user, not the installation folder.
